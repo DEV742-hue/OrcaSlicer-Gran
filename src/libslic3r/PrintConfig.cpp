@@ -5995,6 +5995,14 @@ void PrintConfigDef::init_fff_params()
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionStrings());
 
+    def = this->add("post_process_before_preview", coBool);
+    def->label = L("Show post-processing in preview");
+    def->tooltip = L("Run the post-processing scripts and plugins right after slicing, on the G-code file shown in the preview, "
+                     "and reload the preview from the processed file. The preview then shows the final G-code that will be printed. "
+                     "The scripts are not run a second time on export. The estimated print time is not updated.");
+    def->mode = comAdvanced;
+    def->set_default_value(new ConfigOptionBool(false));
+
     def = this->add("process_change_extrusion_role_gcode", coString);
     def->label = L("Change extrusion role G-code (process)");
     def->tooltip = L("This G-code is inserted when the extrusion role is changed. It runs after the machine and filament extrusion role G-code.");

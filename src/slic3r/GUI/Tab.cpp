@@ -3511,6 +3511,7 @@ void TabPrint::build()
         option.opt.is_code = true;
         option.opt.height = 15;
         optgroup->append_single_option_line(option, "others_settings_post_processing_scripts");
+        optgroup->append_single_option_line("post_process_before_preview", "others_settings_post_processing_scripts");
 
         optgroup = page->new_optgroup(L("Slicing Pipeline Plugin"), L"param_gcode", 0);
         optgroup->hide_labels();

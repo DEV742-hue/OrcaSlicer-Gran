@@ -301,6 +301,8 @@ private:
     bool                invalidate_all_steps();
     // If the background processing stop was requested, throw CanceledException.
     void                throw_if_canceled() const { if (m_print->canceled()) throw CanceledException(); }
+	// Post-process in place before the preview (BBL printers or "post_process_before_preview").
+	bool				post_process_in_place() const;
 	void				finalize_gcode();
 	void				export_gcode();
     void                prepare_upload();

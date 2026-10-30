@@ -288,7 +288,9 @@ void BackgroundSlicingProcess::process_fff()
         // Orca: BBL printers post-process the g-code in place here, in the file the G-code viewer maps, so
         // the preview re-reads its moves and line offsets from the edited file. The rest of m_gcode_result,
         // including nozzle_group_result (consumed by the H2C print-dispatch nozzle mapping), is kept.
-        if (m_fff_print->is_BBL_printer()) {
+        // The same path is used when "post_process_before_preview" is enabled, so the preview shows the
+        // post-processed G-code for any printer.
+        if (post_process_in_place()) {
             if (run_post_process_scripts(m_temp_output_path, false, "File", m_temp_output_path, m_fff_print->full_print_config()))
                 m_fff_print->reload_gcode_moves(m_gcode_result);
         }
@@ -298,7 +300,7 @@ void BackgroundSlicingProcess::process_fff()
     if (this->set_step_started(bspsGCodeFinalize)) {
         if (!m_export_path.empty()) {
             wxQueueEvent(GUI::wxGetApp().mainframe->m_plater, new wxCommandEvent(m_event_export_began_id));
-            if (!m_fff_print->is_BBL_printer())
+            if (!post_process_in_place())
                 finalize_gcode();
             else
                 export_gcode();
@@ -841,6 +843,13 @@ bool BackgroundSlicingProcess::invalidate_all_steps()
     return m_step_state.invalidate_all([this]() { this->stop_internal(); });
 }
 
+// True when the post-processing scripts and plugins run in place right after the G-code export, on the
+// file the G-code viewer reads, instead of on a copy at export time.
+bool BackgroundSlicingProcess::post_process_in_place() const
+{
+    return m_fff_print->is_BBL_printer() || m_fff_print->config().post_process_before_preview.value;
+}
+
 // G-code is generated in m_temp_output_path.
 // Optionally run a post-processing script on a copy of m_temp_output_path.
 // Copy the final G-code to target location (possibly a SD card, if it is a removable media, then verify that the file was written without an error).
@@ -994,12 +1003,13 @@ void BackgroundSlicingProcess::prepare_upload()
                 throw Slic3r::RuntimeError(_utf8(L("Copying of the temporary G-code to the output G-code failed.")));
             m_upload_job.upload_data.upload_path = m_fff_print->print_statistics().finalize_output_path(
                 m_upload_job.upload_data.upload_path.string());
-            // Orca: skip post-processing scripts for BBL printers as we have run them already in finalize_gcode()
+            // Orca: skip post-processing scripts when they already ran in place before the preview
+            // (BBL printers, or "post_process_before_preview").
             // todo: do we need to copy the file?
 
             // Make a copy of the source path, as run_post_process_scripts() is allowed to change it when making a copy of the source file
             // (not here, but when the final target is a file).
-            if (!m_fff_print->is_BBL_printer()) {
+            if (!post_process_in_place()) {
                 std::string source_path_str = source_path.string();
                 std::string output_name_str = m_upload_job.upload_data.upload_path.string();
                 // source_path_str is already a dedicated copy of the temp G-code (see copy_file above), not the
