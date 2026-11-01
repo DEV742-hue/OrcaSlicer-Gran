@@ -8,8 +8,10 @@
 #include <initializer_list>
 #include <limits>
 #include <utility>
-#define SLIC3R_APP_FULL_NAME "Orca Slicer"
-#define GCODEVIEWER_APP_NAME "OrcaSlicer G-code Viewer"
+// Sigma 3D: display name only. SLIC3R_APP_NAME / SLIC3R_APP_KEY (version.inc) stay "OrcaSlicer", so the data
+// folder, the G-code header and the 3MF/profile compatibility checks are unchanged.
+#define SLIC3R_APP_FULL_NAME "Sigma Slicer"
+#define GCODEVIEWER_APP_NAME "Sigma Slicer G-code Viewer"
 #define GCODEVIEWER_APP_KEY  "OrcaSlicerGcodeViewer"
 #define GCODEVIEWER_BUILD_ID std::string("OrcaSlicer G-code Viewer-") + std::string(SLIC3R_VERSION) + std::string("-RC")
 
