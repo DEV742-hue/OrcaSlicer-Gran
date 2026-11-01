@@ -3511,6 +3511,9 @@ void TabPrint::build()
         option.opt.is_code = true;
         option.opt.height = 15;
         optgroup->append_single_option_line(option, "others_settings_post_processing_scripts");
+
+        // Its own group: the scripts group above has no label column (label width 0), so a checkbox row there shows no label.
+        optgroup = page->new_optgroup(L("Post-processing preview"), L"param_gcode");
         optgroup->append_single_option_line("post_process_before_preview", "others_settings_post_processing_scripts");
 
         optgroup = page->new_optgroup(L("Slicing Pipeline Plugin"), L"param_gcode", 0);
