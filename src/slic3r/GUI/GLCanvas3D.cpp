@@ -192,7 +192,7 @@ using namespace std::string_view_literals;
 static constexpr const float TRACKBALLSIZE = 0.8f;
 
 static Slic3r::ColorRGBA DEFAULT_BG_LIGHT_COLOR      = { 0.906f, 0.906f, 0.906f, 1.0f };
-static Slic3r::ColorRGBA DEFAULT_BG_LIGHT_COLOR_DARK = { 0.329f, 0.329f, 0.353f, 1.0f };
+static Slic3r::ColorRGBA DEFAULT_BG_LIGHT_COLOR_DARK = { 0.259f, 0.341f, 0.431f, 1.0f }; // Sigma navy tint
 static Slic3r::ColorRGBA ERROR_BG_LIGHT_COLOR        = { 0.753f, 0.192f, 0.039f, 1.0f };
 static Slic3r::ColorRGBA ERROR_BG_LIGHT_COLOR_DARK   = { 0.753f, 0.192f, 0.039f, 1.0f };
 

@@ -2332,8 +2332,8 @@ wxBoxSizer* MainFrame::create_side_tools()
 
     auto slice_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
     auto print_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
-    slice_panel->SetBackgroundColour(StateColor::darkModeColorFor(wxColour("#3B4446")));
-    print_panel->SetBackgroundColour(StateColor::darkModeColorFor(wxColour("#3B4446")));
+    slice_panel->SetBackgroundColour(StateColor::darkModeColorFor(wxColour("#12345A")));
+    print_panel->SetBackgroundColour(StateColor::darkModeColorFor(wxColour("#12345A")));
 
     m_slice_btn = new SideButton(slice_panel, _L("Slice plate"), "");
     m_slice_option_btn = new SideButton(slice_panel, "", "sidebutton_dropdown", 0, 14);
@@ -2525,7 +2525,7 @@ wxBoxSizer* MainFrame::create_side_tools()
 
     /*
     Button * aux_btn = new Button(this, _L("Auxiliary"));
-    aux_btn->SetBackgroundColour(0x3B4446);
+    aux_btn->SetBackgroundColour(0x12345A);
     aux_btn->Bind(wxEVT_BUTTON, [](auto e) {
         wxGetApp().sidebar().show_auxiliary_dialog();
     });
@@ -2687,7 +2687,7 @@ void MainFrame::update_side_button_style()
     m_slice_btn->SetMinSize(wxSize(-1, FromDIP(24)));
     m_slice_btn->SetCornerRadius(FromDIP(12));
     m_slice_btn->SetExtraSize(wxSize(FromDIP(38), FromDIP(10)));
-    m_slice_btn->SetBottomColour(wxColour(0x3B4446));*/
+    m_slice_btn->SetBottomColour(wxColour(0x12345A));*/
     StateColor m_btn_bg_enable = StateColor(
         std::pair<wxColour, int>(wxColour(156, 122, 39), StateColor::Pressed),
         std::pair<wxColour, int>(wxColour(48, 221, 112), StateColor::Hovered),
@@ -2724,7 +2724,7 @@ void MainFrame::update_side_button_style()
     m_print_option_btn->SetMinSize(wxSize(FromDIP(24), FromDIP(24)));
 
     // Keep panel backgrounds in sync with SideButton's darkModeColorFor(#3B4446) bottom strip
-    auto bg = StateColor::darkModeColorFor(wxColour("#3B4446"));
+    auto bg = StateColor::darkModeColorFor(wxColour("#12345A"));
     m_slice_btn->GetParent()->SetBackgroundColour(bg);
     m_print_btn->GetParent()->SetBackgroundColour(bg);
 }
